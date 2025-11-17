@@ -11,6 +11,19 @@ class Question:
     opcoes: List[str]
     resposta: int  # índice da opção correta em opcoes
 
+    # compatibilidade: aliases em inglês que outros módulos podem usar
+    @property
+    def text(self) -> str:
+        return self.pergunta
+
+    @property
+    def options(self) -> List[str]:
+        return self.opcoes
+
+    @property
+    def correct_index(self) -> int:
+        return self.resposta
+
     def to_dict(self) -> Dict[str, Any]:
         return {"pergunta": self.pergunta, "opcoes": self.opcoes, "resposta": self.resposta}
 
@@ -20,9 +33,13 @@ class Question:
         Útil se quiser apresentar opções em ordem aleatória.
         """
         if seed is not None:
-            random.seed(seed)
-        mapping = list(range(len(self.opcoes)))
-        random.shuffle(mapping)
+            rnd = random.Random(seed)
+            mapping = list(range(len(self.opcoes)))
+            rnd.shuffle(mapping)
+        else:
+            mapping = list(range(len(self.opcoes)))
+            random.shuffle(mapping)
+
         new_options = [self.opcoes[i] for i in mapping]
         new_resposta = mapping.index(self.resposta)
         return Question(self.pergunta, new_options, new_resposta)
@@ -45,14 +62,14 @@ def load_questions(path: str = DATA_PATH, limit: int = None) -> List[Question]:
         # se o JSON estiver inválido, tentar retornar lista vazia
         return []
 
-    qs = []
+    qs: List[Question] = []
     for item in data:
         if not isinstance(item, dict):
             continue
         if "pergunta" in item and "opcoes" in item and "resposta" in item:
             try:
                 q = Question(
-                    pergunta=item["pergunta"],
+                    pergunta=str(item["pergunta"]),
                     opcoes=list(item["opcoes"]),
                     resposta=int(item["resposta"])
                 )
@@ -108,3 +125,6 @@ def add_question_interactive():
     q = Question(pergunta=p, opcoes=opts, resposta=r)
     append_question(q)
     print("Pergunta adicionada com sucesso.")
+
+if __name__ == "__main__":
+    add_question_interactive()
