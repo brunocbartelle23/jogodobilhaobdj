@@ -26,10 +26,7 @@ class QuizManager:
         self.current_question = self.questions[0]
         self.correct_count = 0
 
-        # Atualiza o prêmio inicial
         self.game.current_prize = self.game.prize_levels[0]
-
-        # Inicia cutscene
         self.game.cutscene = Cutscene(self.game, self.game.current_prize)
         self.game.state = "cutscene"
 
@@ -46,9 +43,10 @@ class QuizManager:
 
         try:
             if correct:
-                self.correct_count += 1  # corrigido aqui
-                # Atualiza prêmio ao acertar
-                self.game.current_prize = self.game.prize_levels[self.current_index]
+                self.correct_count += 1
+                # Atualiza prêmio
+                if self.current_index < len(self.game.prize_levels):
+                    self.game.current_prize = self.game.prize_levels[self.current_index]
                 pygame.mixer.Sound("assets/sounds/certaresposta.mp3").play()
             else:
                 pygame.mixer.Sound("assets/sounds/errou.mp3").play()
@@ -65,13 +63,14 @@ class QuizManager:
         if not correct:
             self.game.lives -= 1
             if self.game.lives <= 0:
+                self.game.score = 0
                 self.game.finish_game(game_over=True)
                 return
 
         self.current_index += 1
 
         if self.current_index >= len(self.questions):
-            # converte acertos em prêmio para ranking
+            # Converte acertos em prêmio real para ranking
             prize_values = [1000, 5000, 10000, 20000, 50000, 100000, 200000, 300000, 500000, 1000000]
             self.game.score = prize_values[min(self.correct_count, len(prize_values)-1)]
             self.game.finish_game(game_over=False)
@@ -79,7 +78,6 @@ class QuizManager:
 
         self.current_question = self.questions[self.current_index]
         self.game.current_prize = self.game.prize_levels[self.current_index]
-
         self.selected_option = 0
 
         self.game.cutscene = Cutscene(self.game, self.game.current_prize)
@@ -91,15 +89,12 @@ class QuizManager:
                 self.game.running = False
 
             if not self.await_confirm and event.type == pygame.KEYDOWN:
-
                 if event.key == pygame.K_UP:
                     self.selected_option = (self.selected_option - 1) % len(self.current_question.options)
                     return
-
                 if event.key == pygame.K_DOWN:
                     self.selected_option = (self.selected_option + 1) % len(self.current_question.options)
                     return
-
                 if event.key == pygame.K_RETURN:
                     self.answer_selected = self.selected_option
                     self.await_confirm = True
@@ -107,31 +102,43 @@ class QuizManager:
                     return
 
             if self.await_confirm and event.type == pygame.KEYDOWN:
-
                 if event.key == pygame.K_RETURN:
                     self.await_confirm = False
                     self.answer(self.answer_selected)
                     return
-
                 elif event.key == pygame.K_ESCAPE:
                     self.await_confirm = False
                     self.answer_selected = None
                     return
 
+    # Função auxiliar para quebrar linhas
+    def draw_text_wrap(self, text, font, color, x, y, max_width, line_height):
+        words = text.split(" ")
+        lines = []
+        current_line = ""
+        for word in words:
+            test_line = current_line + word + " "
+            if font.size(test_line)[0] <= max_width:
+                current_line = test_line
+            else:
+                lines.append(current_line)
+                current_line = word + " "
+        lines.append(current_line)
+
+        for i, line in enumerate(lines):
+            txt_surf = font.render(line, True, color)
+            self.game.screen.blit(txt_surf, (x, y + i * line_height))
+
     def draw(self):
         self.game.screen.blit(self.bg, (0, 0))
-        pergunta = self.font.render(
-            self.current_question.text, True, (255, 255, 255)
-        )
-        self.game.screen.blit(pergunta, (40, 60))
-
+        # Desenha pergunta quebrando linhas
+        self.draw_text_wrap(self.current_question.text, self.font, (255, 255, 255), 40, 60, 720, 40)
         self.draw_option_buttons()
 
         if self.await_confirm:
             if not self.confirm_sound_played:
                 pygame.mixer.Sound("assets/sounds/certeza.mp3").play()
                 self.confirm_sound_played = True
-
             self.draw_confirmation()
 
     def draw_option_buttons(self):

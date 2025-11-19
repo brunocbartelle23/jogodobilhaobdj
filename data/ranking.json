@@ -3,5 +3,10 @@
         "name": "bruno",
         "score": 10,
         "patente": "Expert"
+    },
+    {
+        "name": "mari",
+        "score": 8,
+        "patente": "Avançado"
     }
 ]
