@@ -12,7 +12,8 @@ class QuizManager:
         self.bg = pygame.image.load("assets/images/fundomenu.png").convert()
         self.bg = pygame.transform.scale(self.bg, (800, 600))
         self.font = pygame.font.Font("assets/fonts/Montserrat.ttf", 32)
-        self.font.set_bold(True)     
+        self.font.set_bold(True)
+
         self.await_confirm = False
         self.answer_selected = None
         self.confirm_sound_played = False
@@ -23,8 +24,12 @@ class QuizManager:
         self.load_questions()
         self.current_index = 0
         self.current_question = self.questions[0]
+        self.correct_count = 0
+
+        # Atualiza o prêmio inicial
         self.game.current_prize = self.game.prize_levels[0]
 
+        # Inicia cutscene
         self.game.cutscene = Cutscene(self.game, self.game.current_prize)
         self.game.state = "cutscene"
 
@@ -41,7 +46,9 @@ class QuizManager:
 
         try:
             if correct:
-                self.corret_count+=1
+                self.correct_count += 1  # corrigido aqui
+                # Atualiza prêmio ao acertar
+                self.game.current_prize = self.game.prize_levels[self.current_index]
                 pygame.mixer.Sound("assets/sounds/certaresposta.mp3").play()
             else:
                 pygame.mixer.Sound("assets/sounds/errou.mp3").play()
@@ -64,6 +71,9 @@ class QuizManager:
         self.current_index += 1
 
         if self.current_index >= len(self.questions):
+            # converte acertos em prêmio para ranking
+            prize_values = [1000, 5000, 10000, 20000, 50000, 100000, 200000, 300000, 500000, 1000000]
+            self.game.score = prize_values[min(self.correct_count, len(prize_values)-1)]
             self.game.finish_game(game_over=False)
             return
 
@@ -126,7 +136,6 @@ class QuizManager:
 
     def draw_option_buttons(self):
         for i, opcao in enumerate(self.current_question.options):
-
             selected = (self.selected_option == i)
 
             bg_color = (70, 70, 130) if not selected else (255, 200, 0)

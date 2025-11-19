@@ -1,22 +1,52 @@
 [
   {
-    "pergunta": "Quanto é 2+2?",
-    "opcoes": ["1", "2", "3", "4"],
+    "pergunta": "O que a letra I representa \nna sigla da empresa Bigfer?",
+    "opcoes": ["Inui", "Inácio", "Instituição", "Inspiração"],
+    "resposta": 0
+  },
+  {
+    "pergunta": "O que é a Big Bertha?",
+    "opcoes": ["Secretária dos Monstros S.A.", "Espada no jogo Minecraft", "Personagem no filme Gente Grande", "Rolamento de patrola"],
+    "resposta": 1
+  },
+  {
+    "pergunta": "O que dizer para o guarda quando você está dormindo na praça?",
+    "opcoes": ["Bruno e Marrone é o terror", "Sou dorminhoco tchê!", "Affs véi, que ódio.", "Seu guarda eu não sou vagabundo"],
     "resposta": 3
   },
   {
-    "pergunta": "Qual é a função dos nematocistos?",
-    "opcoes": ["matar bacterias invasoras", "liberar veneno de proteção", "não sei", "reprodução partenogenese"],
+    "pergunta": "O que se usa para gabaritar a prova de matemática?",
+    "opcoes": ["Celular", "Colinha", "Catchola", "Estudos"],
     "resposta": 2
   },
   {
-    "pergunta": "Quanto é 2+2?",
-    "opcoes": ["1", "2", "3", "4"],
+    "pergunta": "Qual a distância de Farroupilha para Erechim?",
+    "opcoes": ["272 km", "43 km", "800 metros", "34 watts"],
+    "resposta": 0
+  },
+  {
+    "pergunta": "Qual o filme mais famoso de Leandro Hassum?",
+    "opcoes": ["Croods 2", "Turbo", "Até que a Sorte nos Separe", "O Quatrilho"],
+    "resposta": 2
+  },
+  {
+    "pergunta": "Qual a onomatopeia que representa a vaca?",
+    "opcoes": ["MIAUUUU", "MUUUUUUUU", "GLUGLU", "KKKKKKK"],
+    "resposta": 1
+  },
+  {
+    "pergunta": "Qual o apelido dado geralmente às pessoas com o nome Leonardo?",
+    "opcoes": ["Léo", "Arth", "Paese", "Ardo"],
+    "resposta": 0
+  },
+  {
+    "pergunta": "Expressão dada para falsos amigos, um falso amigo ou alguém que, fingindo amizade, coloca os outros em situações constrangedoras, embaraçosas ou desfavoráveis.  ",
+    "opcoes": ["Extrato de Própolis", "Ponta firme", "Cata-vento", "Amigo da onça"],
     "resposta": 3
   },
   {
-    "pergunta": "Quanto é 2+2?",
-    "opcoes": ["1", "2", "3", "4"],
-    "resposta": 3
+    "pergunta": "Qual a tradução para o código morse .--. .- ..- / -- .- -. -.. .- -.. --- ? ",
+    "opcoes": ["Onça", "Pau mandado", "Truco gaúderio", "Cheirinho de pipoca"],
+    "resposta": 1
   }
 ]

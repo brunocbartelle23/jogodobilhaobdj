@@ -1,34 +1,29 @@
+# src/ranking_screen.py
 import pygame
 
 class RankingScreen:
-    def __init__(self, game, ranking_manager):
-        self.game = game
-        self.ranking_manager = ranking_manager
-        self.font_title = pygame.font.Font("assets/fonts/Montserrat.ttf", 60)
-        self.font_title.set_bold(True)
-        self.font_entry = pygame.font.Font("assets/fonts/Montserrat.ttf", 32)
-        self.bg_color = (10, 10, 50)
-        self.text_color = (255, 255, 255)
-        self.highlight_color = (255, 215, 0)
+    def __init__(self, game=None):
+        self.game = game  # precisa do game para desenhar na tela
+        self.font = pygame.font.Font("assets/fonts/Montserrat.ttf", 36)
 
     def draw(self):
-        self.game.screen.fill(self.bg_color)
+        if not self.game:
+            return
 
-        # Título
-        title_surf = self.font_title.render("RANKING", True, self.highlight_color)
-        title_rect = title_surf.get_rect(center=(400, 80))
-        self.game.screen.blit(title_surf, title_rect)
+        self.game.screen.fill((0, 0, 0))
+        title = self.font.render("RANKING - Top 10", True, (255, 255, 0))
+        self.game.screen.blit(title, (200, 30))
 
-        # Lista de entradas
-        entries = self.ranking_manager.get_all()  # deve retornar lista de dicts com 'name', 'score', 'patente'
-        for i, entry in enumerate(entries[:10]):  # top 10
-            y = 150 + i * 40
-            text = f"{i+1}. {entry['name']} - {entry['score']} ({entry['patente']})"
-            entry_surf = self.font_entry.render(text, True, self.text_color)
-            self.game.screen.blit(entry_surf, (100, y))
+        if not hasattr(self.game, "ranking_manager"):
+            return
 
-        # Instrução
-        instr_surf = self.font_entry.render("Pressione ENTER para voltar ao menu", True, (180, 180, 180))
-        instr_rect = instr_surf.get_rect(center=(400, 550))
-        self.game.screen.blit(instr_surf, instr_rect)
+        entries = self.game.ranking_manager.get_all()  # pega todas as entradas
+        y = 100
+        for idx, entry in enumerate(entries[:10], 1):  # mostra só top 10
+            text = f"{idx}. {entry['name']} - {entry['score']} pts - {entry['patente']}"
+            surf = self.font.render(text, True, (255, 255, 255))
+            self.game.screen.blit(surf, (50, y))
+            y += 40
 
+        press = self.font.render("Pressione ENTER para voltar", True, (180, 180, 180))
+        self.game.screen.blit(press, (150, 550))

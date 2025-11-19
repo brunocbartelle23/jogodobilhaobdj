@@ -17,11 +17,15 @@ class Game:
         self.ranking_manager = RankingManager()
         self.difficulty = "facil"
         self.confirm_sound_played = False
-        self.ranking_screen = RankingScreen(self, self.ranking_manager)
+        self.ranking_screen = RankingScreen(game=self)
 
         self.screen = pygame.display.set_mode((800, 600))
         pygame.display.set_caption("Show do Milhão - Bruno Edition")
 
+        self.player_name = ""  # vazio inicialmente
+        self.state = "menu"  # default
+        self.name_input_active = False  # flag para input
+        self.name_font = pygame.font.Font("assets/fonts/Montserrat.ttf", 48)
         self.clock = pygame.time.Clock()
         self.running = True
         self.state = "menu"
@@ -147,6 +151,8 @@ class Game:
             if self.state == "menu":
                 self.menu.update()
                 self.menu.draw()
+            elif self.state == "input_name":
+                self.input_name_screen()
             elif self.state == "cutscene":
                 self.cutscene.update()
                 self.cutscene.draw()
@@ -241,3 +247,23 @@ class Game:
 
         press = self.font.render("Pressione ENTER para voltar ao menu.", True, (180, 180, 180))
         self.screen.blit(press, (150, 360))
+    def input_name_screen(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN and self.player_name.strip() != "":
+                # nome confirmado, inicia o quiz
+                    self.state = "pergunta"
+                    self.start_quiz()
+                elif event.key == pygame.K_BACKSPACE:
+                    self.player_name = self.player_name[:-1]
+                else:
+                    if len(self.player_name) < 12:  # limite de caracteres
+                        self.player_name += event.unicode
+
+        self.screen.fill((0, 0, 0))
+        prompt = self.name_font.render("Digite seu nome:", True, (255, 255, 0))
+        self.screen.blit(prompt, (180, 150))
+        name_surf = self.name_font.render(self.player_name, True, (255, 255, 255))
+        self.screen.blit(name_surf, (180, 250))
