@@ -5,9 +5,9 @@
     "resposta": 3
   },
   {
-    "pergunta": "Quanto é 2+2?",
-    "opcoes": ["1", "2", "3", "4"],
-    "resposta": 3
+    "pergunta": "Qual é a função dos nematocistos?",
+    "opcoes": ["matar bacterias invasoras", "liberar veneno de proteção", "não sei", "reprodução partenogenese"],
+    "resposta": 2
   },
   {
     "pergunta": "Quanto é 2+2?",

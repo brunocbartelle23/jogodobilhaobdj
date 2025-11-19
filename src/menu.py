@@ -8,7 +8,6 @@ class Menu:
         self.font = pygame.font.Font("assets/fonts/Montserrat.ttf", 40)
 
         self.bg = pygame.image.load("assets/images/fundomenu.png").convert()
-        self.bg = pygame.transform.scale(self.bg, (800, 600))
         self.overlay = pygame.Surface((800, 600), pygame.SRCALPHA)
         self.overlay.fill((0, 60, 0, 150))
 
