@@ -17,16 +17,12 @@ class Cutscene:
 
         # texto
         self.texto = f"Valendo {premio} reais!"
-
-        # som
-        try:
-            pygame.mixer.Sound("assets/sounds/boasorte.mp3").play()
-        except:
-            print("⚠ Som boasorte.mp3 não encontrado")
+        pygame.mixer.Sound("assets/sounds/pergunta.mp3").play()
 
     def update(self):
         if time.time() - self.start_time >= self.duration:
             if self.game.lives > 0:
+                
                 self.game.state = "pergunta"
 
             # **reset do timer da pergunta**

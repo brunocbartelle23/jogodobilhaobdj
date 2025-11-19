@@ -40,6 +40,7 @@ class Menu:
         option = self.options[self.selected]
         if option == "Iniciar Jogo":
             pygame.mixer.music.stop()
+            pygame.mixer.Sound("assets/sounds/boasorte.mp3").play()
             self.game.start_quiz()
         elif option.startswith("Dificuldade"):
             self.change_difficulty_next()
