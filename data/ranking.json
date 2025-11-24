@@ -8,5 +8,10 @@
         "name": "mari",
         "score": 8,
         "patente": "Avançado"
+    },
+    {
+        "name": "sdmarmentini",
+        "score": 1,
+        "patente": "Iniciante"
     }
 ]

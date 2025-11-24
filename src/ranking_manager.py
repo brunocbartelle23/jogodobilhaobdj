@@ -5,7 +5,7 @@ class RankingManager:
     def __init__(self, file_path="data/ranking.json"):
         self.file_path = file_path
         self.entries = []
-        self.load()  # carrega dados do arquivo ao iniciar
+        self.load()
 
     def load(self):
         if os.path.exists(self.file_path):
@@ -27,9 +27,8 @@ class RankingManager:
             "score": score,
             "patente": patente
         })
-        # Ordena do maior para menor score
         self.entries.sort(key=lambda x: x["score"], reverse=True)
-        self.save()  # salva sempre que adicionar
+        self.save() 
 
     def get_all(self):
         return self.entries

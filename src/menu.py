@@ -40,8 +40,8 @@ class Menu:
         if option == "Iniciar Jogo":
             pygame.mixer.music.stop()
             pygame.mixer.Sound("assets/sounds/boasorte.mp3").play()
-            self.game.player_name = ""  # reseta nome
-            self.game.state = "input_name"  # vai para tela de input
+            self.game.player_name = ""  
+            self.game.state = "input_name" 
         elif option.startswith("Dificuldade"):
             self.change_difficulty_next()
         elif option == "Ranking":

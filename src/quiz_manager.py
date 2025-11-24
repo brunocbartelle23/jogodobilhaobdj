@@ -44,7 +44,6 @@ class QuizManager:
         try:
             if correct:
                 self.correct_count += 1
-                # Atualiza prêmio
                 if self.current_index < len(self.game.prize_levels):
                     self.game.current_prize = self.game.prize_levels[self.current_index]
                 pygame.mixer.Sound("assets/sounds/certaresposta.mp3").play()
@@ -70,7 +69,6 @@ class QuizManager:
         self.current_index += 1
 
         if self.current_index >= len(self.questions):
-            # Converte acertos em prêmio real para ranking
             prize_values = [1000, 5000, 10000, 20000, 50000, 100000, 200000, 300000, 500000, 1000000]
             self.game.score = prize_values[min(self.correct_count, len(prize_values)-1)]
             self.game.finish_game(game_over=False)
@@ -111,7 +109,6 @@ class QuizManager:
                     self.answer_selected = None
                     return
 
-    # Função auxiliar para quebrar linhas
     def draw_text_wrap(self, text, font, color, x, y, max_width, line_height):
         words = text.split(" ")
         lines = []
@@ -131,7 +128,6 @@ class QuizManager:
 
     def draw(self):
         self.game.screen.blit(self.bg, (0, 0))
-        # Desenha pergunta quebrando linhas
         self.draw_text_wrap(self.current_question.text, self.font, (255, 255, 255), 40, 60, 720, 40)
         self.draw_option_buttons()
 

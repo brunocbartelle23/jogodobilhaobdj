@@ -22,9 +22,9 @@ class Game:
         self.screen = pygame.display.set_mode((800, 600))
         pygame.display.set_caption("Show do Milhão - Bruno Edition")
 
-        self.player_name = ""  # vazio inicialmente
-        self.state = "menu"  # default
-        self.name_input_active = False  # flag para input
+        self.player_name = ""  
+        self.state = "menu"  
+        self.name_input_active = False  
         self.name_font = pygame.font.Font("assets/fonts/Montserrat.ttf", 48)
         self.clock = pygame.time.Clock()
         self.running = True
@@ -237,7 +237,7 @@ class Game:
                 self.state = "menu"
 
         self.screen.fill((0, 0, 0))
-        msg = ("NÃO DEU PARA VOCÊ HOJE!" if self.last_result and self.last_result.get("game_over")
+        msg = ("NÃO DEU PARA VOCÊ!" if self.last_result and self.last_result.get("game_over")
                else "VOCÊ É O MILIONÁRIO!!")
         text = self.big_font.render(msg, True, (255, 255, 0))
         self.screen.blit(text, (100, 200))
@@ -253,13 +253,12 @@ class Game:
                 self.running = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN and self.player_name.strip() != "":
-                # nome confirmado, inicia o quiz
                     self.state = "pergunta"
                     self.start_quiz()
                 elif event.key == pygame.K_BACKSPACE:
                     self.player_name = self.player_name[:-1]
                 else:
-                    if len(self.player_name) < 12:  # limite de caracteres
+                    if len(self.player_name) < 12:  
                         self.player_name += event.unicode
 
         self.screen.fill((0, 0, 0))

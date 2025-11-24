@@ -1,4 +1,4 @@
-# src/question.py
+
 from dataclasses import dataclass, asdict
 from typing import List, Dict, Any
 import json
@@ -9,9 +9,8 @@ import os
 class Question:
     pergunta: str
     opcoes: List[str]
-    resposta: int  # índice da opção correta em opcoes
+    resposta: int 
 
-    # compatibilidade: aliases em inglês que outros módulos podem usar
     @property
     def text(self) -> str:
         return self.pergunta
@@ -28,10 +27,6 @@ class Question:
         return {"pergunta": self.pergunta, "opcoes": self.opcoes, "resposta": self.resposta}
 
     def shuffled(self, seed: int = None) -> "Question":
-        """
-        Retorna uma cópia embaralhada das opções e ajusta o índice da resposta.
-        Útil se quiser apresentar opções em ordem aleatória.
-        """
         if seed is not None:
             rnd = random.Random(seed)
             mapping = list(range(len(self.opcoes)))
@@ -45,7 +40,7 @@ class Question:
         return Question(self.pergunta, new_options, new_resposta)
 
 
-# ---------- Funções utilitárias para o arquivo JSON ----------
+
 DATA_PATH = os.path.join("data", "questions.json")
 
 def load_questions(path: str = DATA_PATH, limit: int = None) -> List[Question]:
@@ -59,7 +54,6 @@ def load_questions(path: str = DATA_PATH, limit: int = None) -> List[Question]:
     except FileNotFoundError:
         return []
     except Exception:
-        # se o JSON estiver inválido, tentar retornar lista vazia
         return []
 
     qs: List[Question] = []
@@ -81,28 +75,18 @@ def load_questions(path: str = DATA_PATH, limit: int = None) -> List[Question]:
     return qs
 
 def save_questions(questions: List[Question], path: str = DATA_PATH):
-    """
-    Sobrescreve o arquivo JSON com a lista de perguntas fornecida.
-    """
+ 
     os.makedirs(os.path.dirname(path), exist_ok=True)
     data = [q.to_dict() for q in questions]
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 def append_question(question: Question, path: str = DATA_PATH):
-    """
-    Adiciona uma pergunta ao arquivo JSON (append).
-    Cria o arquivo se não existir.
-    """
     qs = load_questions(path)
     qs.append(question)
     save_questions(qs, path)
 
-# ---------- Pequena função interativa para facilitar testes ----------
 def add_question_interactive():
-    """
-    Executar este script (python src/question.py) permite adicionar perguntas via terminal.
-    """
     print("Adicionar nova pergunta ao data/questions.json")
     p = input("Digite a pergunta: ").strip()
     opts = []

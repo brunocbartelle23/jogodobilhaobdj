@@ -5,17 +5,16 @@ class Cutscene:
     def __init__(self, game, premio="1 mil"):
         self.game = game
         self.start_time = time.time()
-        self.duration = 3  # duração em segundos
+        self.duration = 3 
 
         self.font_title = pygame.font.Font("assets/fonts/Montserrat.ttf", 60)
         self.font_title.set_bold(True)
         self.small_font = pygame.font.Font("assets/fonts/Montserrat.ttf", 35)
 
-        # overlay preto
         self.overlay = pygame.Surface((800, 600))
         self.overlay.fill((0, 0, 0))
 
-        # texto
+        
         self.texto = f"Valendo {premio} reais!"
         pygame.mixer.Sound("assets/sounds/pergunta.mp3").play()
 
@@ -25,7 +24,7 @@ class Cutscene:
                 
                 self.game.state = "pergunta"
 
-            # **reset do timer da pergunta**
+            
                 self.game.time_left = self.game.question_time
                 self.game.last_tick = pygame.time.get_ticks()
             else:
