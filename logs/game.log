@@ -8,3 +8,9 @@
 2025-11-24 08:52:29,740 - src.menu - INFO - Menu principal inicializado e música de fundo iniciada.
 2025-11-24 08:52:29,740 - src.menu - INFO - Opção inicial selecionada: Iniciar Jogo
 2025-11-24 08:52:35,427 - root - INFO - Jogo finalizado. Encerrando Pygame.
+2025-11-24 09:31:32,380 - root - INFO - Logging configurado e iniciado.
+2025-11-24 09:31:32,381 - root - INFO - Iniciando o Pygame...
+2025-11-24 09:31:32,587 - root - INFO - Criando instância do Jogo.
+2025-11-24 09:31:32,706 - src.menu - INFO - Menu principal inicializado e música de fundo iniciada.
+2025-11-24 09:31:32,706 - src.menu - INFO - Opção inicial selecionada: Iniciar Jogo
+2025-11-24 09:35:08,085 - root - INFO - Jogo finalizado. Encerrando Pygame.

@@ -44,10 +44,6 @@ class Question:
 DATA_PATH = os.path.join("data", "questions.json")
 
 def load_questions(path: str = DATA_PATH, limit: int = None) -> List[Question]:
-    """
-    Carrega perguntas do JSON e retorna lista de Question.
-    Se o arquivo não existir, retorna lista vazia.
-    """
     try:
         with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
