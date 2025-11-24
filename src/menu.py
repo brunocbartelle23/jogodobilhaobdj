@@ -1,5 +1,6 @@
 import pygame
-
+import logging
+logger = logging.getLogger(__name__)
 class Menu:
     def __init__(self, game):
         self.game = game
@@ -17,6 +18,9 @@ class Menu:
         pygame.mixer.music.load("assets/sounds/intro.mp3")
         pygame.mixer.music.play(-1)
 
+        logger.info("Menu principal inicializado e música de fundo iniciada.")
+        logger.info(f"Opção inicial selecionada: {self.options[self.selected]}")
+
     def update(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -24,6 +28,7 @@ class Menu:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     self.selected = (self.selected - 1) % len(self.options)
+                    
                 elif event.key == pygame.K_DOWN:
                     self.selected = (self.selected + 1) % len(self.options)
                 elif event.key == pygame.K_RETURN:
